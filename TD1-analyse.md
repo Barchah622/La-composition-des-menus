@@ -71,8 +71,14 @@
 
 | # | Use case | Acteur principal | Porteur |
 |---|---|---|---|
-| UC1 | | | |
-| UC2 | | | |
+| UC1 | Enregistrer un ingrédient | Chef de production | Manele HSSINI |
+| UC2 | Composer une recette (plat ou préparation de base) | Chef de production | Abir GUEBBACHE |
+| UC3 | Mettre à jour le prix d'un ingrédient | Système fournisseur | Abir GUEBBACHE |
+| UC4 | Calculer le coût de revient d'un menu | Chef de production | Manele HSSINI |
+| UC5 | Établir la liste des allergènes d’un menu | Chef de production | Tania HUSSAIN |
+| UC6 | Composer un menu | Chef de production | Mohamed Amine BARCHAH |
+| UC7 | Modifier le prix d’un ingrédient | Chef de production | Tania HUSSAIN |
+| UC8 | Fixer le prix de vente d'un menu selon le type de client | Commercial | Mohamed Amine BARCHAH |
 
 **Diagramme de use cases**
 
