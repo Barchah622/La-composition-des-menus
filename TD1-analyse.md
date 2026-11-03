@@ -17,7 +17,7 @@
 | Membre | Use case riche | Use case simple |
 |---|---|---|
 | Manele Hssini|UC4 — Calculer le coût de revient d'un menu |	UC1 — Enregistrer un ingrédient |
-| Prénom Nom | | |
+| Tania Hussain |UC5 — Établir la liste des allergènes d’un menu |  UC7 — Modifier le prix d’un ingrédient|
 | Prénom Nom | | |
 
 ---
