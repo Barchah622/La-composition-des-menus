@@ -46,7 +46,9 @@
 | # | Nous supposons que… | parce que… | Si c'est faux, cela change… |
 |---|---|---|---|
 | H1 |	le coût de revient ne compte que le coût des ingrédients | c'est le seul coût que le mail permet de relier aux plats|la formule de UC4 : il faut ajouter des coûts fixes ou horaires par recette. |
-| H2 | | | |
+| H2 | le commercial fixe le prix en appliquant un simple coefficient multiplicateur sur le coût de revient selon le type de client | la cliente demande une politique de prix selon le client mais ne mentionne aucune règle complexe de remise | le scénario nominal de l'UC8 : il faudrait développer un moteur de règles tarifaires beaucoup plus lourd. |
+| H3 | la composition d'un menu se fait uniquement en sélectionnant des plats standards, sans modifier les ingrédients pour cet événement | le besoin évoque l'assemblage de plats, ce qui implique de réutiliser les fiches techniques telles quelles | la structure de l'UC6 : le système devrait créer une copie indépendante de la recette pour chaque menu. |
+| H4 | le prix de vente fixé pour un menu est définitivement figé une fois validé par le commercial, même si le coût des ingrédients fluctue | un devis communiqué à un client engage commercialement le traiteur, le prix ne peut plus bouger | le comportement de l'UC8 : il faudrait gérer des alertes de marge et des mises à jour dynamiques des devis. |
 | H5 | un menu est une liste de plats répartis en services (entrée, plat, dessert), avec un seul choix par service, pour un nombre de couverts donné | c'est le cas le plus simple qui couvre un événement, et le mail ne parle pas de choix | il faudrait gérer des options par service, et le coût deviendrait une fourchette ou une moyenne |
 | H6 | le nombre de couverts reste modifiable jusqu'à la validation du devis, et les quantités et le coût sont alors recalculés | un événement change souvent de taille avant la date, mais un devis signé ne doit plus bouger | il faudrait gérer des versions du menu ou des avenants au devis |
 ---
