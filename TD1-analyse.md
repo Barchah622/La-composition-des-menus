@@ -16,7 +16,7 @@
 
 | Membre | Use case riche | Use case simple |
 |---|---|---|
-| Manele Hssini| | |
+| Manele Hssini|UC4 — Calculer le coût de revient d'un menu |	UC1 — Enregistrer un ingrédient |
 | Prénom Nom | | |
 | Prénom Nom | | |
 
