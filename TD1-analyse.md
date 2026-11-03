@@ -29,7 +29,7 @@
 | # | Question | Type de flou | Ce que la réponse débloque |
 |---|---|---|---|
 | Q1 |Le « coût de revient » d'un menu, c'est seulement le coût des ingrédients, ou faut-il aussi compter la main-d'œuvre, l'énergie et les pertes ? |	non-dit  | La formule de calcul du coût (RM sur le coût de revient, UC4).|
-| Q2 | | ambiguïté / contradiction / non-dit / contrainte cachée | |
+| Q2 | Quand « une sauce entre dans trois plats », comment indiquez-vous la quantité utilisée dans chaque plat, et une préparation a-t-elle un rendement (pertes à la cuisson, quantité produite par recette) ?| ambiguïté / contradiction / non-dit / contrainte cachée | 	Le calcul récursif : on prend une part de la sauce au prorata de la quantité utilisée (UC2, UC4).|
 
 ---
 
