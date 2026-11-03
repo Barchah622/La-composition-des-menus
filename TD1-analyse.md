@@ -41,7 +41,7 @@
 
 | # | Nous supposons que… | parce que… | Si c'est faux, cela change… |
 |---|---|---|---|
-| H1 | | | |
+| H1 |	le coût de revient ne compte que le coût des ingrédients | c'est le seul coût que le mail permet de relier aux plats|la formule de UC4 : il faut ajouter des coûts fixes ou horaires par recette. |
 | H2 | | | |
 
 ---
