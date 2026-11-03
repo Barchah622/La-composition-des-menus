@@ -20,6 +20,7 @@
 | Abir Guebbache | UC2 — Composer une recette (plat ou préparation de base) | UC3 — Mettre à jour le prix d'un ingrédient |
 | Tania Hussain |UC5 — Établir la liste des allergènes d’un menu | UC7 — Modifier le prix d’un ingrédient |
 
+
 ---
 
 ## 2. Nos questions à la cliente
@@ -34,6 +35,8 @@
 | Q4 | Une recette est-elle écrite pour un nombre de portions fixe, et faut-il recalculer les quantités automatiquement selon le nombre de couverts d'une commande ? | non-dit | Ce qu'on enregistre dans une recette (quantités pour N portions) et la règle de mise à l'échelle des quantités (UC2, UC5). |
 | Q5 | Quand vous « composez des menus pour des événements », un menu est-il organisé en services (entrée, plat, dessert) avec plusieurs choix possibles par service, ou c'est une simple liste de plats ? | ambiguïté | La structure d'un menu et la façon de calculer son coût par couvert (UC5, UC4). |
 | Q6 | Le nombre de couverts d'un événement peut-il changer une fois le menu composé (invités en plus, annulations) ? Jusqu'à quand ? | non-dit | Faut-il recalculer quantités et coût, et à partir de quand le menu est figé (UC6, UC4). |
+| Q7 | Qu'est-ce qui différencie exactement un client « entreprise » d'un « particulier » (coefficient de marge différent, TVA, remise selon le volume) ? | ambiguïté | La formule de calcul du prix de vente (UC8, RM sur les prix). |
+| Q8 | Les nouveaux prix des ingrédients doivent-ils être saisis à la main, ou proviennent-ils d'un fichier/logiciel externe (fournisseur) ? | non-dit | L'identification d'un acteur non humain et le mécanisme d'import (UC3, UC7). | 
 ---
 
 ## 3. Nos hypothèses
