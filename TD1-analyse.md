@@ -28,7 +28,7 @@
 
 | # | Question | Type de flou | Ce que la réponse débloque |
 |---|---|---|---|
-| Q1 | | ambiguïté / contradiction / non-dit / contrainte cachée | |
+| Q1 |Le « coût de revient » d'un menu, c'est seulement le coût des ingrédients, ou faut-il aussi compter la main-d'œuvre, l'énergie et les pertes ? | ambiguïté / contradiction / non-dit / contrainte cachée | |
 | Q2 | | | |
 
 ---
