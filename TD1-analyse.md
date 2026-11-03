@@ -63,8 +63,7 @@
 | # | Use case | Acteur principal | Porteur |
 |---|---|---|---|
 | UC1 | | | |
-| UC2 | Composer une recette | Chef de production | Abir Guebbache |
-| UC3 | Mettre à jour le prix d'un ingrédient | Chef de production (ou fournisseur) | Abir Guebbache |
+| UC2 | | | |
 
 **Diagramme de use cases**
 
@@ -102,86 +101,6 @@
 - 3e.
 
 **Règles métier appliquées :** RM…
-
----
-
-### UC2 — Composer une recette
-
-- **Auteur :** Abir Guebbache
-- **Acteur principal :** Chef de production (Karim T.)
-- **Acteurs secondaires :** aucun
-- **Objectif :** Décrire un plat ou une préparation de base (ex. une sauce) avec ses composants et leurs quantités, pour pouvoir ensuite l'utiliser dans d'autres plats et dans les menus, et en calculer le coût.
-- **Préconditions :** Les ingrédients utilisés sont déjà enregistrés (UC1). Les préparations de base utilisées comme composant sont déjà enregistrées.
-
-**Scénario nominal**
-
-1. Le chef demande à créer une nouvelle recette.
-2. Le système demande le nom de la recette, son type (plat ou préparation de base) et le nombre de portions (ou la quantité produite, ex. 2 litres de sauce).
-3. Le chef saisit ces informations.
-4. Le chef ajoute un composant : il choisit un ingrédient ou une préparation de base existante, et indique la quantité utilisée avec son unité (g, kg, L, pièce).
-5. Le système vérifie que le composant existe et que l'unité est compatible.
-6. Le chef répète l'étape 4 pour chaque composant.
-7. Le chef valide la recette.
-8. Le système enregistre la recette et affiche son coût calculé à partir des prix des composants (UC4).
-
-**Scénarios alternatifs**
-
-- 4a. Le composant est une préparation de base (ex. une sauce qui entre dans trois plats) : le système prend seulement la part utilisée, au prorata de la quantité produite par la préparation.
-- 4b. Le chef modifie ou retire un composant déjà ajouté avant de valider.
-- 1a. Le chef part d'une recette existante pour en créer une variante (copie puis modification).
-
-**Scénarios d'erreur**
-
-- 3e. Une recette porte déjà ce nom : le système refuse et demande un autre nom.
-- 4e. L'ingrédient n'existe pas dans le système : le système le signale et propose de l'enregistrer d'abord (UC1).
-- 5e. La quantité est nulle, négative ou l'unité n'est pas compatible avec l'ingrédient (ex. des litres pour des œufs) : le système refuse le composant.
-- 5e'. Le chef ajoute comme composant une préparation qui contient déjà la recette en cours (boucle : la sauce A contient la sauce B qui contient la sauce A) : le système refuse.
-- 7e. La recette n'a aucun composant : le système refuse de la valider.
-
-**Règles métier appliquées :**
-- Une recette a au moins un composant.
-- Chaque quantité est strictement positive et exprimée dans une unité compatible avec le composant.
-- Une préparation de base ne peut pas se contenir elle-même, directement ou indirectement.
-- Le nom d'une recette est unique.
-- Le coût d'une préparation utilisée dans un plat est compté au prorata de la quantité utilisée.
-
----
-
-### UC3 — Mettre à jour le prix d'un ingrédient
-
-- **Auteur :** Abir Guebbache
-- **Acteur principal :** Chef de production (Karim T.)
-- **Acteurs secondaires :** Fournisseur (non humain : tarif ou facture fournisseur reçu)
-- **Objectif :** Garder le prix d'achat des ingrédients à jour pour que le coût des recettes et des menus reste juste.
-- **Préconditions :** L'ingrédient est déjà enregistré (UC1).
-
-**Scénario nominal**
-
-1. Le chef reçoit un nouveau prix du fournisseur et demande à modifier le prix d'un ingrédient.
-2. Le système affiche l'ingrédient avec son prix actuel et son unité d'achat (ex. 4,20 € le kg).
-3. Le chef saisit le nouveau prix et la date à partir de laquelle il s'applique.
-4. Le système vérifie le prix.
-5. Le système enregistre le nouveau prix en gardant l'ancien dans l'historique.
-6. Le système recalcule le coût des recettes et des menus qui utilisent cet ingrédient et affiche la liste de ceux qui sont touchés.
-
-**Scénarios alternatifs**
-
-- 1a. Le nouveau prix arrive directement par le tarif du fournisseur : le système propose la mise à jour, le chef la confirme.
-- 3a. Le fournisseur change aussi l'unité ou le conditionnement (ex. carton de 6 au lieu du kg) : le chef saisit la nouvelle unité et le système convertit.
-- 6a. Les menus déjà proposés à un client dans un devis gardent le prix du jour du devis (voir Q3).
-
-**Scénarios d'erreur**
-
-- 2e. L'ingrédient recherché n'existe pas : le système le signale et propose de l'enregistrer (UC1).
-- 4e. Le prix est vide, nul ou négatif : le système refuse.
-- 4e'. Le prix est très différent de l'ancien (ex. multiplié par 10, erreur de virgule) : le système demande une confirmation avant d'enregistrer.
-- 3e. La date d'application est dans le passé avant le dernier prix enregistré : le système refuse.
-
-**Règles métier appliquées :**
-- Un prix d'ingrédient est strictement positif.
-- Un ingrédient a un seul prix en vigueur à une date donnée.
-- L'ancien prix est conservé (historique), il n'est jamais effacé.
-- Un changement de prix met à jour le coût de toutes les recettes qui contiennent l'ingrédient, directement ou via une préparation.
 
 ---
 
