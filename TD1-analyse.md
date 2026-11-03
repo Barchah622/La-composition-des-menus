@@ -52,14 +52,15 @@
 | H5 | un menu est une liste de plats répartis en services (entrée, plat, dessert), avec un seul choix par service, pour un nombre de couverts donné | c'est le cas le plus simple qui couvre un événement, et le mail ne parle pas de choix | il faudrait gérer des options par service, et le coût deviendrait une fourchette ou une moyenne |
 | H6 | le nombre de couverts reste modifiable jusqu'à la validation du devis, et les quantités et le coût sont alors recalculés | un événement change souvent de taille avant la date, mais un devis signé ne doit plus bouger | il faudrait gérer des versions du menu ou des avenants au devis |
 ---
-
 ## 4. Les acteurs
 
 *Qui déclenche une interaction avec le système. Au moins un acteur n'est pas humain.*
 
 | Acteur | Humain ? | Ce qu'il veut obtenir |
 |---|---|---|
-| | oui / non | |
+| Chef de production (Karim T.) | oui | Composer des plats et des menus, calculer leur coût de revient et gérer la liste de leurs allergènes. |
+| Commercial | oui | Consulter et fixer les prix de vente des menus pour les devis en appliquant la politique tarifaire par client. |
+| Système fournisseur | non | Transmettre et mettre à jour automatiquement les prix d'achat des ingrédients dans le système. |
 
 ---
 
