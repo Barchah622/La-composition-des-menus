@@ -16,9 +16,11 @@
 
 | Membre | Use case riche | Use case simple |
 |---|---|---|
-| Prénom Nom | | |
-| Prénom Nom | | |
-| Prénom Nom | | |
+| Manele Hssini|UC4 — Calculer le coût de revient d'un menu |	UC1 — Enregistrer un ingrédient |
+| Abir Guebbache | UC2 — Composer une recette (plat ou préparation de base) | UC3 — Mettre à jour le prix d'un ingrédient |
+| Tania Hussain |UC5 — Établir la liste des allergènes d’un menu | UC7 — Modifier le prix d’un ingrédient |
+| Mohamed Amine BARCHAH | UC8 — Fixer le prix de vente d'un menu selon le type de client | UC6 — Composer un menu
+
 
 ---
 
@@ -28,9 +30,14 @@
 
 | # | Question | Type de flou | Ce que la réponse débloque |
 |---|---|---|---|
-| Q1 | | ambiguïté / contradiction / non-dit / contrainte cachée | |
-| Q2 | | | |
-
+| Q1 |Le « coût de revient » d'un menu, c'est seulement le coût des ingrédients, ou faut-il aussi compter la main-d'œuvre, l'énergie et les pertes ? |	non-dit  | La formule de calcul du coût (RM sur le coût de revient, UC4).|
+| Q2 | Quand « une sauce entre dans trois plats », comment indiquez-vous la quantité utilisée dans chaque plat, et une préparation a-t-elle un rendement (pertes à la cuisson, quantité produite par recette) ?| ambiguïté  | 	Le calcul récursif : on prend une part de la sauce au prorata de la quantité utilisée (UC2, UC4).|
+| Q3 | Quand le prix d'un ingrédient change chez le fournisseur, le coût des menus déjà proposés ou vendus à un client doit-il changer aussi, ou garde-t-on le prix du jour du devis ? | contrainte cachée | Faut-il garder l'historique des prix des ingrédients et figer le coût d'un menu au moment du devis (UC3, UC4). |
+| Q4 | Une recette est-elle écrite pour un nombre de portions fixe, et faut-il recalculer les quantités automatiquement selon le nombre de couverts d'une commande ? | non-dit | Ce qu'on enregistre dans une recette (quantités pour N portions) et la règle de mise à l'échelle des quantités (UC2, UC5). |
+| Q5 | Quand vous « composez des menus pour des événements », un menu est-il organisé en services (entrée, plat, dessert) avec plusieurs choix possibles par service, ou c'est une simple liste de plats ? | ambiguïté | La structure d'un menu et la façon de calculer son coût par couvert (UC5, UC4). |
+| Q6 | Le nombre de couverts d'un événement peut-il changer une fois le menu composé (invités en plus, annulations) ? Jusqu'à quand ? | non-dit | Faut-il recalculer quantités et coût, et à partir de quand le menu est figé (UC6, UC4). |
+| Q7 | Qu'est-ce qui différencie exactement un client « entreprise » d'un « particulier » (coefficient de marge différent, TVA, remise selon le volume) ? | ambiguïté | La formule de calcul du prix de vente (UC8, RM sur les prix). |
+| Q8 | Les nouveaux prix des ingrédients doivent-ils être saisis à la main, ou proviennent-ils d'un fichier/logiciel externe (fournisseur) ? | non-dit | L'identification d'un acteur non humain et le mécanisme d'import (UC3, UC7). | 
 ---
 
 ## 3. Nos hypothèses
@@ -39,18 +46,22 @@
 
 | # | Nous supposons que… | parce que… | Si c'est faux, cela change… |
 |---|---|---|---|
-| H1 | | | |
-| H2 | | | |
-
+| H1 |	le coût de revient ne compte que le coût des ingrédients | c'est le seul coût que le mail permet de relier aux plats|la formule de UC4 : il faut ajouter des coûts fixes ou horaires par recette. |
+| H2 | le commercial fixe le prix en appliquant un simple coefficient multiplicateur sur le coût de revient selon le type de client | la cliente demande une politique de prix selon le client mais ne mentionne aucune règle complexe de remise | le scénario nominal de l'UC8 : il faudrait développer un moteur de règles tarifaires beaucoup plus lourd. |
+| H3 | la composition d'un menu se fait uniquement en sélectionnant des plats standards, sans modifier les ingrédients pour cet événement | le besoin évoque l'assemblage de plats, ce qui implique de réutiliser les fiches techniques telles quelles | la structure de l'UC6 : le système devrait créer une copie indépendante de la recette pour chaque menu. |
+| H4 | le prix de vente fixé pour un menu est définitivement figé une fois validé par le commercial, même si le coût des ingrédients fluctue | un devis communiqué à un client engage commercialement le traiteur, le prix ne peut plus bouger | le comportement de l'UC8 : il faudrait gérer des alertes de marge et des mises à jour dynamiques des devis. |
+| H5 | un menu est une liste de plats répartis en services (entrée, plat, dessert), avec un seul choix par service, pour un nombre de couverts donné | c'est le cas le plus simple qui couvre un événement, et le mail ne parle pas de choix | il faudrait gérer des options par service, et le coût deviendrait une fourchette ou une moyenne |
+| H6 | le nombre de couverts reste modifiable jusqu'à la validation du devis, et les quantités et le coût sont alors recalculés | un événement change souvent de taille avant la date, mais un devis signé ne doit plus bouger | il faudrait gérer des versions du menu ou des avenants au devis |
 ---
-
 ## 4. Les acteurs
 
 *Qui déclenche une interaction avec le système. Au moins un acteur n'est pas humain.*
 
 | Acteur | Humain ? | Ce qu'il veut obtenir |
 |---|---|---|
-| | oui / non | |
+| Chef de production (Karim T.) | oui | Composer des plats et des menus, calculer leur coût de revient et gérer la liste de leurs allergènes. |
+| Commercial | oui | Consulter et fixer les prix de vente des menus pour les devis en appliquant la politique tarifaire par client. |
+| Système fournisseur | non | Transmettre et mettre à jour automatiquement les prix d'achat des ingrédients dans le système. |
 
 ---
 
@@ -60,8 +71,14 @@
 
 | # | Use case | Acteur principal | Porteur |
 |---|---|---|---|
-| UC1 | | | |
-| UC2 | | | |
+| UC1 | Enregistrer un ingrédient | Chef de production | Manele HSSINI |
+| UC2 | Composer une recette (plat ou préparation de base) | Chef de production | Abir GUEBBACHE |
+| UC3 | Mettre à jour le prix d'un ingrédient | Système fournisseur | Abir GUEBBACHE |
+| UC4 | Calculer le coût de revient d'un menu | Chef de production | Manele HSSINI |
+| UC5 | Établir la liste des allergènes d’un menu | Chef de production | Tania HUSSAIN |
+| UC6 | Composer un menu | Chef de production | Mohamed Amine BARCHAH |
+| UC7 | Modifier le prix d’un ingrédient | Chef de production | Tania HUSSAIN |
+| UC8 | Fixer le prix de vente d'un menu selon le type de client | Commercial | Mohamed Amine BARCHAH |
 
 **Diagramme de use cases**
 
