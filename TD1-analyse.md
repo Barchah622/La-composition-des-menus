@@ -16,7 +16,7 @@
 
 | Membre | Use case riche | Use case simple |
 |---|---|---|
-| Prénom Nom | | |
+| Manele Hssini| | |
 | Prénom Nom | | |
 | Prénom Nom | | |
 
