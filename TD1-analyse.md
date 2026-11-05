@@ -261,6 +261,40 @@
 **Règles métier appliquées :** RM2, RM3, RM8, RM10, RM11, RM15, RM16, RM19, RM20
 
 ---
+### UC5 — Établir la liste des allergènes d'un menu
+
+- **Auteur :** Tania HUSSAIN
+- **Acteur principal :** Chef de production (Karim T.)
+- **Acteurs secondaires :** Commercial (remet la liste au client)
+- **Objectif :** Obtenir la liste complète et sûre des allergènes d'un menu, en descendant dans chaque plat, chaque préparation et chaque ingrédient, pour informer le client comme la loi l'exige.
+- **Préconditions :** Le menu existe et contient au moins un plat (UC6). Les plats du menu sont composés (UC2).
+
+**Scénario nominal**
+
+1. Le Chef de production choisit un menu et demande la liste de ses allergènes.
+2. Pour chaque plat du menu, le système reprend sa composition. Pour chaque préparation, il descend dans sa composition, à tous les niveaux (même une sauce dans une sauce).
+3. Pour chaque ingrédient atteint, le système relève ses allergènes parmi les 14 allergènes réglementaires (RM23).
+4. Le système vérifie que chaque ingrédient a sa liste d'allergènes renseignée, ou est marqué « aucun allergène » (RM18, RM22).
+5. Le système retient un allergène dès qu'un seul composant le contient, à n'importe quel niveau (RM12, RM21). Ex. saumon sauce hollandaise : poisson (saumon), œufs et lait (jaunes d'œufs et beurre de la hollandaise).
+6. Le système affiche la liste des allergènes du menu, plat par plat puis pour le menu entier.
+7. Le Chef valide la liste. Le système l'enregistre avec sa date (RM24) ; le Commercial peut la remettre au client.
+
+**Scénarios alternatifs**
+
+- 6a. **Aucun allergène :** tous les ingrédients du menu sont marqués « aucun allergène ». Le système affiche « aucun des 14 allergènes réglementaires », ce qui n'est pas la même chose qu'une liste vide (RM18).
+- 6b. **Origine d'un allergène :** le Chef veut savoir d'où vient un allergène. Le système affiche le chemin complet (ex. Filet de saumon → Sauce hollandaise → Beurre → lait).
+- 7a. **Liste à refaire :** un ingrédient du menu a été modifié depuis la dernière liste. Le Chef relance le calcul ; la nouvelle liste remplace l'ancienne (RM24).
+
+**Scénarios d'erreur**
+
+- 4e. **Allergènes non renseignés :** un ingrédient, à n'importe quel niveau, est marqué « allergènes à compléter ». Le système n'établit pas la liste, affiche l'ingrédient et le plat concerné, et propose de compléter sa fiche (UC1). On ne devine jamais un allergène (RM22).
+- 2e. **Plat retiré :** un plat du menu a été supprimé depuis la composition du menu. Le système le signale et n'établit pas la liste tant que le menu n'a pas été corrigé (UC6, RM1).
+- 7e. **Ingrédient modifié après validation :** les allergènes d'un ingrédient changent après que la liste a été validée (nouvelle fiche fournisseur). Le système marque la liste « à revoir » et prévient le Chef ; elle ne peut plus être remise au client tant qu'elle n'est pas refaite (RM24).
+
+**Règles métier appliquées :** RM1, RM12, RM18, RM21, RM22, RM23, RM24
+
+---
+
 ### UC6 — Composer un menu
 
 - **Auteur :** Mohamed Amine BARCHAH
