@@ -496,6 +496,9 @@
 - Le nombre de couverts peut-il changer après la validation du menu, et jusqu'à quand ?
 - Les prix (et les allergènes) arrivent-ils par un logiciel du fournisseur ou sont-ils saisis à la main ?
 - La liste des 14 allergènes, que la cliente doit nous donner.
+- Si un ingrédient n'a pas ses allergènes renseignés, la liste du menu est-elle bloquée (notre choix, RM22) ou affichée avec un avertissement ?
+- Le seuil à partir duquel une variation de prix est jugée anormale (nous avons pris 50 %, RM26).
+- Faut-il un justificatif (facture, tarif) pour modifier un prix à la main (notre choix, RM25) ?
 
 ---
 
