@@ -118,6 +118,78 @@
 **Règles métier appliquées :** RM…
 
 ---
+
+### UC2 — Composer une recette (plat ou préparation de base)
+
+- **Auteur :** Abir GUEBBACHE
+- **Acteur principal :** Chef de production (Karim T.)
+- **Acteurs secondaires :** Aucun
+- **Objectif :** Décrire un plat (servi pour une portion) ou une préparation faite maison (ex. 1 litre de sauce hollandaise) avec ses composants et leurs quantités, pour pouvoir la réutiliser dans d'autres plats et dans les menus, et en connaître le coût de revient et les allergènes.
+- **Préconditions :** Les ingrédients utilisés sont déjà enregistrés avec leur prix et leurs allergènes (UC1). Les préparations utilisées comme composant sont déjà enregistrées.
+
+**Scénario nominal**
+
+1. Le Chef de production demande à créer une nouvelle recette.
+2. Le système demande le nom de la recette et son type : plat (pour une portion) ou préparation (avec la quantité produite, ex. 1 L).
+3. Le Chef saisit ces informations.
+4. Le Chef ajoute un composant : il choisit un ingrédient ou une préparation existante et indique la quantité utilisée avec son unité (kg, g, L, cL, pièce).
+5. Le système vérifie que le composant existe, que la quantité est valide et que l'unité est compatible avec celle du composant (RM7, RM8).
+6. Le Chef répète les étapes 4 et 5 pour chaque composant.
+7. Le Chef valide la recette.
+8. Le système enregistre la recette, puis affiche son coût de revient (au prorata des quantités, pertes de 10 % comprises sur les ingrédients frais) et la liste de ses allergènes, à tous les niveaux (RM10, RM11, RM12).
+
+**Scénarios alternatifs**
+
+- 1a. **Variante d'une recette :** le Chef part d'une recette existante, le système en fait une copie sous un nouveau nom que le Chef modifie.
+- 4a. **Composant = préparation :** le Chef ajoute une préparation (ex. 5 cL de sauce hollandaise). Le système compte seulement la part utilisée, au prorata de la quantité produite par la préparation (RM10).
+- 6a. **Correction avant validation :** le Chef modifie la quantité d'un composant ou le retire. Le système met à jour la composition et le coût affiché.
+
+**Scénarios d'erreur**
+
+- 3e. **Nom déjà utilisé :** une recette porte déjà ce nom. Le système refuse et demande un autre nom (RM9).
+- 4e. **Composant inconnu :** l'ingrédient cherché n'est pas enregistré. Le système le signale et propose de l'enregistrer d'abord (UC1).
+- 5e. **Quantité ou unité invalide :** la quantité est nulle ou négative, ou l'unité n'est pas compatible (ex. des litres pour des œufs vendus à la pièce). Le système refuse le composant (RM8).
+- 5e'. **Boucle :** le Chef ajoute une préparation qui contient déjà, directement ou indirectement, la recette en cours (la sauce A contient la sauce B qui contient la sauce A). Le système refuse le composant (RM7).
+- 7e. **Recette vide :** le Chef valide sans aucun composant. Le système refuse la validation (RM6).
+- 8e. **Données manquantes :** un ingrédient de la recette, à n'importe quel niveau, n'a pas de prix ou pas de liste d'allergènes renseignée. Le système enregistre la recette mais signale que son coût et ses allergènes sont incomplets, et indique l'ingrédient en cause.
+
+**Règles métier appliquées :** RM6, RM7, RM8, RM9, RM10, RM11, RM12
+
+---
+
+### UC3 — Mettre à jour le prix d'un ingrédient
+
+- **Auteur :** Abir GUEBBACHE
+- **Acteur principal :** Système fournisseur (acteur non humain : tarif transmis par le logiciel du fournisseur)
+- **Acteurs secondaires :** Chef de production (confirme les variations anormales)
+- **Objectif :** Garder le prix d'achat des ingrédients à jour pour que le coût de revient de tous les plats et menus qui les utilisent reste juste.
+- **Préconditions :** L'ingrédient est déjà enregistré avec son unité d'achat (kilo, litre ou pièce) (UC1).
+
+**Scénario nominal**
+
+1. Le Système fournisseur transmet un nouveau prix pour un ingrédient (référence de l'ingrédient, prix, unité d'achat, date d'application).
+2. Le système retrouve l'ingrédient et son prix actuel (ex. saumon : 18,50 € le kg).
+3. Le système vérifie le nouveau prix et son unité (RM13, RM14).
+4. Le système enregistre le nouveau prix comme prix en vigueur à partir de la date d'application et conserve l'ancien dans l'historique (RM15).
+5. Le système recalcule le coût de revient de toutes les préparations, plats et menus qui utilisent cet ingrédient, à tous les niveaux (RM16).
+6. Le système signale au Chef de production la liste des plats et menus dont le coût a changé.
+
+**Scénarios alternatifs**
+
+- 1a. **Saisie manuelle :** le prix est reçu sur une facture papier. Le Chef de production saisit lui-même le nouveau prix (cf. UC7), la suite est identique à partir de l'étape 3.
+- 3a. **Changement de conditionnement :** le fournisseur passe du kilo à la pièce (ex. carton de 6). Le système convertit le prix dans l'unité d'achat de l'ingrédient si la conversion est connue, sinon il demande au Chef de la renseigner.
+
+**Scénarios d'erreur**
+
+- 2e. **Ingrédient inconnu :** la référence transmise ne correspond à aucun ingrédient enregistré. Le système rejette la ligne et la signale au Chef, qui peut enregistrer l'ingrédient (UC1).
+- 3e. **Prix invalide :** le prix est vide, nul ou négatif. Le système rejette la mise à jour et garde l'ancien prix (RM13).
+- 3e'. **Variation anormale :** le nouveau prix est très éloigné de l'ancien (ex. multiplié par 10, erreur de virgule). Le système met la mise à jour en attente et demande une confirmation au Chef de production avant de l'appliquer.
+- 4e. **Date incohérente :** la date d'application est antérieure à celle du dernier prix enregistré. Le système rejette la mise à jour (RM15).
+
+**Règles métier appliquées :** RM13, RM14, RM15, RM16
+
+---
+
 ### UC6 — Composer un menu
 
 - **Auteur :** Mohamed Amine BARCHAH
@@ -185,8 +257,19 @@
 | RM1 | Un menu doit impérativement contenir au moins un plat pour être valide et sauvegardé. | UC6 |
 | RM2 | Le nombre de convives renseigné pour tarifer un menu doit toujours être strictement positif (> 0). | UC8 |
 | RM3 | Le prix de vente d'un menu ne peut pas être fixé si l'un de ses ingrédients ne possède pas de prix en vigueur (coût incalculable). | UC8 |
-| RM4 | Le prix de vente théorique est calculé en appliquant un coefficient multiplicateur lié au type de client (ex: Entreprise, Particulier) sur le coût de revient total. | UC8 |
+| RM4 | Le prix de vente théorique est calculé en appliquant un coefficient multiplicateur lié au type de client sur le coût de revient total : × 3 pour une entreprise, × 2,5 pour un particulier. | UC8 |
 | RM5 | Le prix de vente final fixé par le commercial doit être supérieur ou égal au coût de revient (interdiction stricte de vendre à perte). | UC8 |
+| RM6 | Une recette (plat ou préparation) contient au moins un composant (ingrédient ou préparation). | UC2 |
+| RM7 | Une préparation ne peut jamais se contenir elle-même, ni directement ni indirectement (via une autre préparation). | UC2 |
+| RM8 | Chaque quantité d'un composant est strictement positive et exprimée dans une unité compatible avec son unité d'achat (kilo, litre ou pièce). | UC2 |
+| RM9 | Deux recettes ne peuvent pas porter le même nom. | UC2 |
+| RM10 | Le coût d'une préparation utilisée dans une recette est compté au prorata de la quantité utilisée par rapport à la quantité qu'elle produit. | UC2, UC4 |
+| RM11 | On ajoute 10 % au coût des ingrédients frais (légumes, poisson, viande) pour couvrir les pertes. | UC2, UC4 |
+| RM12 | Une recette contient un allergène dès qu'un seul de ses composants le contient, à n'importe quel niveau (même une sauce dans une sauce). | UC2, UC5 |
+| RM13 | Le prix d'achat d'un ingrédient est strictement positif. | UC3, UC7 |
+| RM14 | Le prix d'achat d'un ingrédient est exprimé au kilo, au litre ou à la pièce. | UC3, UC1 |
+| RM15 | Un ingrédient a un seul prix en vigueur à une date donnée ; un nouveau prix ne peut pas s'appliquer avant le dernier prix enregistré, et l'ancien prix est conservé dans l'historique. | UC3, UC7 |
+| RM16 | Quand le prix d'un ingrédient change, le coût de toutes les préparations, plats et menus qui l'utilisent, à tous les niveaux, change aussi. | UC3, UC4, UC7 |
 
 ---
 
@@ -196,11 +279,17 @@
 
 | Ce qu'elle nous a fait voir | Ce qu'on a changé |
 |---|---|
-| Acteur oublié : | |
-| Cas d'erreur oublié : | |
-| Cas d'erreur oublié : | |
-| Cas d'erreur oublié : | |
-| Hypothèse discutable : | |
+| Acteur oublié : l'équipe de Kadiatou a un acteur non humain « Logiciel du fournisseur » qui met à jour **les prix et les allergènes** des ingrédients. Notre « Système fournisseur » ne transmettait que les prix. | Le Système fournisseur reste l'acteur principal de UC3 ; nous notons qu'il peut aussi transmettre les allergènes d'un ingrédient (point à confirmer avec la cliente, voir partie 10). |
+| Cas d'erreur oublié : un ingrédient dont la liste d'allergènes n'est pas renseignée (l'équipe a un UC « Consulter les allergènes d'un menu » séparé). Sans cette liste, les allergènes du menu sont faux. | Ajout du contrôle à la validation d'une recette (UC2) : le coût et les allergènes ne sont affichés que si chaque ingrédient a son prix et sa liste d'allergènes (RM12). |
+| Cas d'erreur oublié : une préparation qui se contient elle-même (l'équipe a un UC « Créer une préparation » séparé de « Composer un plat »). | Ajout du scénario d'erreur 5e' « boucle » dans UC2 et de la règle RM7. |
+| Cas d'erreur oublié : le fournisseur envoie un prix pour un ingrédient inconnu du système, ou un prix aberrant. | Ajout des scénarios 2e « ingrédient inconnu » et 3e' « variation anormale » dans UC3. |
+| Hypothèse discutable : notre H4/Q3 (figer le coût au moment du devis). L'équipe de Kadiatou n'en parle pas, et la cliente a répondu que si un prix change, le coût de tous les plats et menus change aussi. | UC3 recalcule le coût de tout ce qui utilise l'ingrédient (RM16). Le figement du prix de vente d'un devis signé reste une question ouverte (partie 10). |
+
+**Autres différences avec l'équipe de Kadiatou :**
+
+- Ils séparent « Composer un plat » (UC5) et « Créer une préparation » (UC6) ; nous les avons réunis dans UC2 « Composer une recette » car ils ont le même scénario (des composants avec des quantités).
+- Leur acteur Commercial veut « connaître le prix de vente d'un menu selon le type de client » (UC8) : même besoin que notre UC8.
+- Ils n'ont pas d'UC de saisie manuelle du prix par le Chef ; nous avons UC7 en plus de UC3 pour le cas d'une facture papier.
 
 ---
 
@@ -210,7 +299,18 @@
 
 | Terme | Définition |
 |---|---|
-| | |
+| Ingrédient | Un produit acheté (beurre, farine, saumon…). Il a un prix d'achat au kilo, au litre ou à la pièce, et une liste d'allergènes. |
+| Ingrédient frais | Un ingrédient qui s'abîme vite : légumes, poisson, viande. On compte 10 % de pertes sur son coût. |
+| Préparation | Une recette faite chez nous à partir d'ingrédients et parfois d'autres préparations, avec des quantités (ex. 1 litre de sauce hollandaise). Elle peut entrer dans plusieurs plats. |
+| Plat | Ce qui est servi : il est composé d'ingrédients et de préparations, pour une portion. |
+| Menu | Une suite de plats (entrée, plat, dessert…) commandée pour un nombre de couverts. |
+| Composant | Ce qui entre dans une préparation ou un plat : un ingrédient ou une préparation, avec sa quantité. |
+| Couvert | Une personne servie lors d'un événement. Le nombre de couverts fixe la quantité de chaque plat à produire. |
+| Coût de revient | La somme des coûts de chaque composant, au prorata des quantités utilisées, à tous les niveaux, pertes comprises. |
+| Pertes | Ce qu'on jette ou qu'on perd en préparant les produits frais ; compté comme 10 % du coût des ingrédients frais. |
+| Allergène | Une des 14 substances réglementaires qui doivent être signalées au client (gluten, lait, œufs, poisson…). |
+| Prix de vente | Le prix proposé au client : coût de revient × 3 pour une entreprise, × 2,5 pour un particulier. |
+| Remise | Réduction que le commercial voudrait accorder aux gros clients (forme pas encore décidée). |
 
 ---
 
@@ -220,12 +320,35 @@
 
 | Q ou H | Réponse de la cliente | Vu / Raté / Ouvert | Ce qu'on a changé dans le fichier |
 |---|---|---|---|
-| Q1 | | | |
-| H1 | | | |
+| Q1 | Le coût de revient est la somme des coûts des composants au prorata, à tous les niveaux, **plus 10 % de pertes sur les ingrédients frais**. Rien sur la main-d'œuvre ni l'énergie. | Vu | Ajout de RM11 (pertes de 10 %), appliquée dans UC2 et UC4. |
+| Q2 | Une préparation a une quantité produite (ex. 1 L de sauce hollandaise) et entre dans plusieurs plats ; le coût est compté au prorata des quantités utilisées. | Vu | UC2 : une préparation a une quantité produite (étape 2) ; RM10 (prorata). |
+| Q3 | Si un prix d'ingrédient change, le coût de tous les plats et menus qui l'utilisent change aussi. Rien sur les devis déjà envoyés. | Vu / Ouvert | UC3 étape 5 et RM16 : recalcul de tout ce qui utilise l'ingrédient. L'historique des prix est gardé (RM15). Le cas des devis signés reste ouvert. |
+| Q4 | Un plat est décrit pour une portion ; un menu est commandé pour un nombre de couverts. | Vu | UC2 : un plat est saisi pour une portion. Les quantités et le coût d'un menu = portion × nombre de couverts (UC4, UC8). |
+| Q5 | Un menu est une suite de plats (entrée, plat, dessert…). Rien sur plusieurs choix par service. | Vu | Aucun changement : H5 est conservée. |
+| Q6 | Pas de réponse. | Ouvert | Aucun changement : H6 est conservée. |
+| Q7 | Prix de vente = coût de revient × 3 pour une entreprise, × 2,5 pour un particulier. Les remises aux gros clients ne sont pas décidées. | Vu / Ouvert | RM4 : coefficients 3 et 2,5 précisés. Les remises restent hors périmètre pour l'instant. |
+| Q8 | Pas de réponse directe ; le prix d'achat est au kilo, au litre ou à la pièce. | Ouvert | UC3 garde le Système fournisseur comme acteur et la saisie manuelle en alternative (1a, UC7) ; ajout de RM14 (unités). |
+| H1 | Faux en partie : il faut ajouter 10 % de pertes sur les ingrédients frais. | Raté | Formule du coût de revient corrigée (RM11). |
+| H2 | Confirmé : un coefficient selon le type de client (× 3 / × 2,5). | Vu | RM4 précisée. |
+| H3 | Pas de réponse ; un plat est « ce qui est servi », réutilisé tel quel. | Vu | Aucun changement. |
+| H4 | La cliente dit que le coût change avec les prix ; elle ne dit rien du prix d'un devis déjà validé. | Ouvert | Le coût de revient est toujours recalculé (RM16) ; le prix de vente validé reste figé en attendant une réponse. |
+| H5 | Confirmé : une suite de plats pour un nombre de couverts. | Vu | Aucun changement. |
+| H6 | Pas de réponse. | Ouvert | Aucun changement. |
 
 **Ce que nous n'avions pas vu :**
 
+- Les 10 % de pertes sur les ingrédients frais (légumes, poisson, viande) dans le coût de revient.
+- Les allergènes : un menu contient un allergène dès qu'un seul composant le contient, même « une sauce dans une sauce », sur la liste des 14 allergènes réglementaires.
+- Le prix d'achat a trois unités possibles : kilo, litre ou pièce.
+- Le suivi des stocks est hors périmètre pour cette année.
+
 **Ce qui reste ouvert après les réponses :**
+
+- La forme des remises aux gros clients : pourcentage ou prix négocié par client ?
+- Le prix d'un devis déjà validé doit-il bouger si un prix d'ingrédient change ?
+- Le nombre de couverts peut-il changer après la validation du menu, et jusqu'à quand ?
+- Les prix (et les allergènes) arrivent-ils par un logiciel du fournisseur ou sont-ils saisis à la main ?
+- La liste des 14 allergènes, que la cliente doit nous donner.
 
 ---
 
