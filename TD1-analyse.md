@@ -118,6 +118,63 @@
 **Règles métier appliquées :** RM…
 
 ---
+### UC6 — Composer un menu
+
+- **Auteur :** Mohamed Amine BARCHAH
+- **Acteur principal :** Chef de production
+- **Acteurs secondaires :** Aucun
+- **Objectif :** Créer un nouveau menu destiné à être vendu pour des événements en y associant des plats existants.
+- **Préconditions :** Les recettes (plats) doivent être préalablement créées dans le système (UC2).
+
+**Scénario nominal**
+
+1. Le Chef de production demande la création d'un nouveau menu et saisit son nom.
+2. Le système affiche la liste des plats disponibles.
+3. Le Chef sélectionne un ou plusieurs plats et valide la composition.
+4. Le système enregistre le menu et affiche un message de confirmation.
+
+**Scénarios alternatifs**
+
+- 3a. **Retrait d'un plat :** Avant de valider, le Chef retire un plat sélectionné par erreur. Le système met à jour la composition temporaire.
+
+**Scénarios d'erreur**
+
+- 3e. **Menu vide :** Le Chef tente de valider le menu sans avoir sélectionné aucun plat. Le système bloque l'action et affiche l'erreur « menu vide » (RM1).
+- 2e. **Plat introuvable :** Le Chef cherche un plat qui n'existe pas ou a été supprimé. Le système indique qu'aucun résultat ne correspond.
+
+**Règles métier appliquées :** RM1
+
+---
+
+### UC8 — Fixer le prix de vente d'un menu selon le type de client
+
+- **Auteur :** Mohamed Amine BARCHAH
+- **Acteur principal :** Commercial
+- **Acteurs secondaires :** Aucun
+- **Objectif :** Définir le prix de vente d'un menu en appliquant la politique tarifaire adaptée au profil du client.
+- **Préconditions :** Le menu doit exister (UC6) et son coût de revient total doit avoir pu être calculé (UC4).
+
+**Scénario nominal**
+
+1. Le Commercial sélectionne un menu existant et saisit un nombre de convives cible.
+2. Le système calcule et affiche le coût de revient total pour ce nombre de convives.
+3. Le Commercial sélectionne le type de client (Entreprise ou Particulier).
+4. Le système calcule le prix de vente théorique en appliquant le coefficient lié au type de client (RM4).
+5. Le Commercial valide ou ajuste manuellement le prix de vente final.
+6. Le système enregistre le prix de vente associé à ce menu pour ce profil.
+
+**Scénarios alternatifs**
+
+- 5a. **Ajustement manuel :** Le Commercial saisit un prix différent du prix théorique. Le système affiche la nouvelle marge générée avant validation.
+
+**Scénarios d'erreur**
+
+- 1e. **Nombre de convives invalide :** Le Commercial saisit 0 ou un nombre négatif. Le système bloque le calcul et affiche l'erreur « nombre de convives invalide » (RM2).
+- 2e. **Coût incalculable :** Le système détecte un ingrédient sans prix en vigueur dans la composition du menu. Le système bloque la tarification et affiche l'erreur « prix manquant » (RM3).
+
+**Règles métier appliquées :** RM2, RM3, RM4, RM5
+
+---
 
 ## 7. Les règles métier
 
