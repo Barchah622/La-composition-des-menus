@@ -322,6 +322,42 @@
 **Règles métier appliquées :** RM1
 
 ---
+### UC7 — Modifier le prix d'un ingrédient
+
+- **Auteur :** Tania HUSSAIN
+- **Acteur principal :** Chef de production (Karim T.)
+- **Acteurs secondaires :** Aucun
+- **Objectif :** Saisir à la main le nouveau prix d'achat d'un ingrédient quand le tarif arrive sur une facture papier ou par téléphone, pour que le coût de revient des plats et menus reste juste.
+- **Préconditions :** L'ingrédient est déjà enregistré avec son unité d'achat (kilo, litre ou pièce) (UC1).
+
+**Scénario nominal**
+
+1. Le Chef de production cherche l'ingrédient et demande à modifier son prix.
+2. Le système affiche le prix en vigueur, son unité et sa date (ex. crème liquide : 4,20 € le litre depuis le 1er octobre).
+3. Le Chef saisit le nouveau prix, la date d'application et la référence du justificatif (ex. facture n° 2611-045) (RM25).
+4. Le système vérifie que le prix est strictement positif, exprimé dans l'unité d'achat, et que la date n'est pas antérieure à celle du dernier prix (RM13, RM14, RM15).
+5. Le système affiche l'écart avec l'ancien prix et la liste des préparations, plats et menus qui utilisent l'ingrédient.
+6. Le Chef confirme la modification.
+7. Le système enregistre le nouveau prix comme prix en vigueur à partir de la date d'application et conserve l'ancien dans l'historique (RM15).
+8. Le système recalcule le coût de tout ce qui utilise l'ingrédient, à tous les niveaux, et affiche le nouveau coût par couvert des menus concernés (RM16).
+
+**Scénarios alternatifs**
+
+- 2a. **Premier prix :** l'ingrédient a été enregistré sans prix (« prix manquant », UC1 3a). Le système n'affiche pas d'ancien prix ; le Chef saisit le premier, et l'ingrédient n'est plus marqué « prix manquant ».
+- 3a. **Prix à venir :** le fournisseur annonce une hausse au 1er du mois suivant. Le Chef saisit une date future ; le prix actuel reste en vigueur jusqu'à cette date (RM15).
+- 6a. **Annulation :** en voyant les menus concernés, le Chef renonce. Rien n'est modifié.
+
+**Scénarios d'erreur**
+
+- 3e. **Justificatif manquant :** le Chef ne saisit aucune référence de facture ou de tarif. Le système refuse la modification (RM25).
+- 4e. **Prix invalide :** le prix est vide, nul ou négatif. Le système refuse et garde l'ancien prix (RM13).
+- 4e'. **Date incohérente :** la date d'application est antérieure à celle du dernier prix enregistré. Le système refuse (RM15).
+- 4e''. **Variation anormale :** le nouveau prix s'écarte de plus de 50 % de l'ancien (ex. 42 € au lieu de 4,20 €, erreur de virgule). Le système demande au Chef de confirmer en ressaisissant le prix (RM26).
+- 7e. **Conflit avec le fournisseur :** le Système fournisseur a déjà transmis un prix pour la même date (UC3). Le système affiche les deux prix et demande au Chef lequel retenir.
+
+**Règles métier appliquées :** RM13, RM14, RM15, RM16, RM25, RM26
+
+---
 
 ### UC8 — Fixer le prix de vente d'un menu selon le type de client
 
