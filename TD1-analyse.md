@@ -119,6 +119,41 @@
 
 ---
 
+### UC1 — Enregistrer un ingrédient
+
+- **Auteur :** Manele HSSINI
+- **Acteur principal :** Chef de production (Karim T.)
+- **Acteurs secondaires :** Aucun
+- **Objectif :** Ajouter un produit acheté (beurre, saumon, œufs…) avec son prix, son unité d'achat, s'il est frais ou non, et ses allergènes, pour pouvoir ensuite l'utiliser dans les recettes.
+- **Préconditions :** La liste des 14 allergènes réglementaires est connue du système.
+
+**Scénario nominal**
+
+1. Le Chef de production demande à enregistrer un nouvel ingrédient.
+2. Le système demande le nom, l'unité d'achat (kilo, litre ou pièce), le prix d'achat, si l'ingrédient est frais, et ses allergènes.
+3. Le Chef saisit le nom, l'unité d'achat et le prix (ex. beurre doux, 9,80 € le kilo).
+4. Le Chef indique si l'ingrédient est frais (légume, poisson, viande) ou non.
+5. Le Chef coche les allergènes de l'ingrédient dans la liste des 14, ou indique « aucun allergène » (ex. beurre doux : lait).
+6. Le système vérifie que le nom n'est pas déjà pris, que le prix est valide et que l'unité fait partie des trois autorisées (RM13, RM14, RM17).
+7. Le système enregistre l'ingrédient. Le prix saisi devient son prix en vigueur à partir d'aujourd'hui (RM15).
+8. Le système confirme l'enregistrement. L'ingrédient peut maintenant être choisi comme composant d'une recette (UC2).
+
+**Scénarios alternatifs**
+
+- 1a. **Depuis une recette :** le Chef est en train de composer une recette et l'ingrédient n'existe pas encore (UC2, 4e). Il l'enregistre ici, puis revient à sa recette là où il en était.
+- 3a. **Prix pas encore connu :** le Chef n'a pas encore le tarif du fournisseur. Le système enregistre l'ingrédient sans prix et le marque « prix manquant ». Les recettes qui l'utilisent auront un coût incomplet tant que le prix n'est pas saisi (UC7) ou reçu (UC3).
+- 5a. **Allergènes pas encore connus :** la fiche du fournisseur n'est pas arrivée. Le Chef laisse la liste vide ; le système marque l'ingrédient « allergènes à compléter », ce qui n'est pas la même chose que « aucun allergène » (RM18).
+
+**Scénarios d'erreur**
+
+- 3e. **Nom déjà utilisé :** un ingrédient porte déjà ce nom (ex. deux fois « crème fraîche »). Le système refuse et affiche l'ingrédient existant pour que le Chef vérifie s'il s'agit du même produit (RM17).
+- 3e'. **Prix invalide :** le prix saisi est nul ou négatif. Le système refuse et redemande le prix (RM13).
+- 3e''. **Unité non autorisée :** le Chef saisit une autre unité (ex. « botte », « barquette »). Le système refuse et lui demande de choisir entre kilo, litre et pièce (RM14).
+
+**Règles métier appliquées :** RM13, RM14, RM15, RM17, RM18
+
+---
+
 ### UC2 — Composer une recette (plat ou préparation de base)
 
 - **Auteur :** Abir GUEBBACHE
@@ -157,6 +192,7 @@
 
 ---
 
+
 ### UC3 — Mettre à jour le prix d'un ingrédient
 
 - **Auteur :** Abir GUEBBACHE
@@ -189,7 +225,42 @@
 **Règles métier appliquées :** RM13, RM14, RM15, RM16
 
 ---
+### UC4 — Calculer le coût de revient d'un menu
 
+- **Auteur :** Manele HSSINI
+- **Acteur principal :** Chef de production (Karim T.)
+- **Acteurs secondaires :** Aucun (le Commercial utilise ensuite le résultat dans UC8)
+- **Objectif :** Savoir combien coûte un menu pour un événement, en descendant dans chaque plat, chaque préparation et chaque ingrédient, pertes comprises, pour pouvoir ensuite fixer un prix de vente qui ne fasse pas perdre d'argent.
+- **Préconditions :** Le menu existe et contient au moins un plat (UC6). Les plats du menu sont composés (UC2).
+
+**Scénario nominal**
+
+1. Le Chef de production choisit un menu et saisit le nombre de couverts de l'événement (ex. mariage, 120 couverts).
+2. Le système vérifie que le nombre de couverts est strictement positif (RM2).
+3. Pour chaque plat du menu, le système reprend sa composition. Pour chaque ingrédient, il convertit la quantité dans l'unité d'achat (ex. 150 g → 0,150 kg) et la multiplie par le prix en vigueur à la date du jour (RM15, RM20).
+4. Le système ajoute 10 % au coût des ingrédients frais (RM11).
+5. Pour chaque préparation utilisée dans un plat, le système calcule d'abord le coût de toute la préparation de la même façon, à tous les niveaux, puis ne garde que la part utilisée (RM10). Ex. la sauce hollandaise coûte 6,40 € le litre ; le plat en utilise 5 cL, donc 0,32 €.
+6. Le système additionne les composants pour obtenir le coût d'une portion de chaque plat, puis additionne les plats pour obtenir le coût par couvert du menu (RM19).
+7. Le système multiplie le coût par couvert par le nombre de couverts pour obtenir le coût total (RM19).
+8. Le système affiche le détail : coût d'une portion de chaque plat, coût par couvert, coût total, et la date des prix utilisés.
+9. Le système garde ce calcul (menu, nombre de couverts, date, coût) pour que le Commercial puisse s'en servir pour fixer le prix de vente (UC8).
+
+**Scénarios alternatifs**
+
+- 1a. **Coût par couvert seulement :** le Chef ne connaît pas encore le nombre de couverts. Il ne saisit rien ; le système fait le calcul pour un couvert et s'arrête à l'étape 6.
+- 3a. **Prix à une autre date :** le Chef veut le coût avec les prix en vigueur à une date passée (ex. pour comparer avec un devis de septembre). Le système utilise l'historique des prix à cette date (RM15).
+- 8a. **Prix changé depuis le dernier calcul :** un prix d'ingrédient a changé depuis le dernier calcul de ce menu (UC3, UC7). Le système affiche l'ancien et le nouveau coût par couvert pour que le Chef voie l'écart (RM16).
+
+**Scénarios d'erreur**
+
+- 2e. **Nombre de couverts invalide :** le Chef saisit 0 ou un nombre négatif. Le système refuse et redemande le nombre de couverts (RM2).
+- 3e. **Ingrédient sans prix :** un ingrédient, à n'importe quel niveau, n'a pas de prix en vigueur. Le système calcule quand même le reste mais affiche le coût comme « incomplet », avec le nom de l'ingrédient et le plat concerné. Ce coût ne peut pas servir à fixer un prix de vente (RM3).
+- 3e'. **Conversion impossible :** la quantité est dans une unité qu'on ne peut pas ramener à l'unité d'achat (ex. 200 g de citron alors que le citron est acheté à la pièce). Le système ne peut pas chiffrer cette ligne ; il signale l'ingrédient et la recette en cause, et le coût est affiché comme « incomplet » (RM8, RM20).
+- 6e. **Plat retiré :** un plat du menu a été supprimé depuis la composition du menu. Le système le signale et ne calcule pas le coût tant que le menu n'a pas été corrigé (UC6).
+
+**Règles métier appliquées :** RM2, RM3, RM8, RM10, RM11, RM15, RM16, RM19, RM20
+
+---
 ### UC6 — Composer un menu
 
 - **Auteur :** Mohamed Amine BARCHAH
