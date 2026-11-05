@@ -182,8 +182,11 @@
 
 | # | Règle métier | Use cases qui l'appliquent |
 |---|---|---|
-| RM1 | | |
-| RM2 | | |
+| RM1 | Un menu doit impérativement contenir au moins un plat pour être valide et sauvegardé. | UC6 |
+| RM2 | Le nombre de convives renseigné pour tarifer un menu doit toujours être strictement positif (> 0). | UC8 |
+| RM3 | Le prix de vente d'un menu ne peut pas être fixé si l'un de ses ingrédients ne possède pas de prix en vigueur (coût incalculable). | UC8 |
+| RM4 | Le prix de vente théorique est calculé en appliquant un coefficient multiplicateur lié au type de client (ex: Entreprise, Particulier) sur le coût de revient total. | UC8 |
+| RM5 | Le prix de vente final fixé par le commercial doit être supérieur ou égal au coût de revient (interdiction stricte de vendre à perte). | UC8 |
 
 ---
 
