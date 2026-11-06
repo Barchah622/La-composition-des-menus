@@ -208,7 +208,20 @@
 
 *L'objet qui change d'état au fil du temps dans votre sujet. 3 à 6 états, avec des noms du métier. Chaque transition porte l'événement qui la déclenche. Au moins une transition d'erreur.*
 
-**Objet choisi :**
+**Objet choisi :** le **Menu**. On le compose, on calcule son coût, le commercial le tarife, puis il devient un devis validé. Un changement de prix d'ingrédient le fait revenir en arrière (RM16).
+
+| État | Ce que ça veut dire dans le métier |
+|---|---|
+| En composition | Le chef choisit les plats du menu. |
+| Composé | Le menu a au moins un plat (RM1). |
+| Chiffré | Son coût de revient est calculé pour le nombre de couverts (RM19). |
+| Tarifé | Le commercial a fixé le prix de vente selon le type de client (RM4, RM5). |
+| Devis validé | Le client a accepté le devis : le prix de vente est figé (H4). |
+| À recalculer | Le prix d'un ingrédient ou le nombre de couverts a changé : le coût n'est plus à jour (RM16, H6). |
+
+**Transitions d'erreur (en rouge) :** validation d'un menu sans plat refusée (RM1), calcul refusé quand un ingrédient n'a pas de prix (RM3), prix de vente sous le coût de revient refusé (RM5).
+
+*Source modifiable dans draw.io : `diagrammes/etats.drawio`.*
 
 ![Diagramme d'états](diagrammes/etats.png)
 
