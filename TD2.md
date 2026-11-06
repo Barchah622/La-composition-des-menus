@@ -45,9 +45,9 @@
 
 | Responsabilité | Collaborateurs |
 |---|---|
-| Représenter une des 14 substances réglementaires à signaler au client. | Ingrédient |
+| Représenter une des 14 substances réglementaires à signaler au client. | Ingrédient, ListeAllergènesMenu |
 
-**Règles portées :** —
+**Règles portées :** RM23
 
 ---
 
@@ -151,6 +151,46 @@
 
 ---
 
+### ListeAllergènesMenu
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Garder la liste datée des allergènes d'un menu, telle qu'elle est remise au client. | Menu, Allergène, VérificateurAllergènes |
+
+**Règles portées :** RM24
+
+---
+
+### VérificateurAllergènes *(classe inventée, c'est elle qui décide)*
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Décider si la liste des allergènes d'un menu est complète pour être remise au client. | Menu, Recette, Composant, Ingrédient, ListeAllergènesMenu |
+
+**Règles portées :** RM21, RM22
+
+---
+
+### ModificationPrix
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Porter un nouveau prix saisi à la main par le Chef, avec la référence de son justificatif. | Ingrédient, PrixIngrédient, ContrôleurVariationPrix, ImpactChangementPrix, TarifFournisseur |
+
+**Règles portées :** RM25
+
+---
+
+### ContrôleurVariationPrix *(classe inventée, c'est elle qui décide)*
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Décider si un nouveau prix s'écarte trop de l'ancien pour être appliqué sans vérification. | PrixIngrédient, ModificationPrix, TarifFournisseur |
+
+**Règles portées :** RM26
+
+---
+
 ## 2. Le diagramme de classes
 
 *Chaque carte devient une classe : attributs, méthodes, relations, cardinalités. Ce qui n'est sur aucune carte n'existe pas dans le diagramme. Dans le doute, une association plutôt qu'un héritage.*
@@ -190,8 +230,10 @@
 
 | Use case | Porteur | Classes qui participent | Ce que fait chaque classe |
 |---|---|---|---|
-| UC… | Prénom Nom | | |
-| UC… | Prénom Nom | | |
+| UC1 | Manele Hssini | CatalogueIngrédients, Ingrédient, PrixIngrédient, Allergène | CatalogueIngrédients vérifie que le nom n'est pas déjà pris. Ingrédient garde l'unité d'achat, le caractère frais et les allergènes. PrixIngrédient enregistre le premier prix avec sa date. Allergène fournit la liste des 14 à cocher. |
+| UC4 | Manele Hssini | CalculateurCoûtRevient, Menu, Recette, Composant, ConvertisseurUnités, PrixIngrédient, CoûtCalculé | CalculateurCoûtRevient vérifie le nombre de couverts, applique les 10 % de pertes et fait le total. Menu donne ses plats. Recette et Composant donnent les quantités. ConvertisseurUnités ramène chaque quantité en kilo, litre ou pièce. PrixIngrédient donne le prix du jour. CoûtCalculé garde le résultat pour le Commercial. |
+| UC5 | Tania Hussain | VérificateurAllergènes, Menu, Recette, Composant, Ingrédient, Allergène, ListeAllergènesMenu | VérificateurAllergènes descend dans chaque plat et refuse la liste si un ingrédient n'a pas ses allergènes. Menu donne ses plats. Recette et Composant donnent ce qui entre dans chaque plat. Ingrédient donne ses allergènes. Allergène limite aux 14 réglementaires. ListeAllergènesMenu garde la liste validée avec sa date. |
+| UC7 | Tania Hussain | ModificationPrix, Ingrédient, PrixIngrédient, ContrôleurVariationPrix, ImpactChangementPrix | ModificationPrix porte le nouveau prix et la référence de la facture. PrixIngrédient vérifie la date et garde l'ancien prix. ContrôleurVariationPrix demande une confirmation si l'écart dépasse 50 %. ImpactChangementPrix donne la liste des plats et menus à recalculer. |
 
 ---
 
