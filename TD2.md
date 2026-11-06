@@ -1,4 +1,4 @@
-# TD 2 · Modèle — Sujet [A, B, C ou D] : [titre du sujet]
+# TD 2 · Modèle — Sujet C : La composition des menus
 
 > **Livrable 2.** Un seul fichier, dans le dépôt GitLab de l'équipe, avec les images des diagrammes dans le dossier `diagrammes/`.
 > **À pousser avant le dimanche 8 novembre à 23h59.**
@@ -18,6 +18,76 @@
 | | |
 
 **Règles portées :** RM…
+
+---
+
+### Ingrédient
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Décrire un produit acheté chez un fournisseur, tel qu'on l'utilise en cuisine. | PrixIngrédient, Allergène, CatalogueIngrédients |
+
+**Règles portées :** RM14, RM18
+
+---
+
+### PrixIngrédient
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Garder un prix d'achat valable à partir d'une date donnée. | Ingrédient |
+
+**Règles portées :** RM13, RM15
+
+---
+
+### Allergène
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Représenter une des 14 substances réglementaires à signaler au client. | Ingrédient |
+
+**Règles portées :** —
+
+---
+
+### CatalogueIngrédients
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Refuser un nouvel ingrédient dont le nom est déjà pris. | Ingrédient |
+
+**Règles portées :** RM17
+
+---
+
+### ConvertisseurUnités
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Ramener une quantité dans l'unité d'achat de l'ingrédient. | Ingrédient, Composant |
+
+**Règles portées :** RM20
+
+---
+
+### CalculateurCoûtRevient *(classe inventée, c'est elle qui décide)*
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Décider du coût de revient d'un menu pour un nombre de couverts. | Menu, Recette, Composant, PrixIngrédient, ConvertisseurUnités, CoûtCalculé |
+
+**Règles portées :** RM2, RM3, RM11, RM19
+
+---
+
+### CoûtCalculé
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Mémoriser le résultat d'un calcul de coût à une date donnée. | Menu, CalculateurCoûtRevient |
+
+**Règles portées :** —
 
 ---
 
