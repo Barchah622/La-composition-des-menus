@@ -411,6 +411,10 @@
 | RM14 | Le prix d'achat d'un ingrédient est exprimé au kilo, au litre ou à la pièce. | UC3, UC1 |
 | RM15 | Un ingrédient a un seul prix en vigueur à une date donnée ; un nouveau prix ne peut pas s'appliquer avant le dernier prix enregistré, et l'ancien prix est conservé dans l'historique. | UC3, UC7 |
 | RM16 | Quand le prix d'un ingrédient change, le coût de toutes les préparations, plats et menus qui l'utilisent, à tous les niveaux, change aussi. | UC3, UC4, UC7 |
+| RM17 | Deux ingrédients ne peuvent pas porter le même nom. | UC1 |
+| RM18 | « Aucun allergène » doit être indiqué explicitement pour un ingrédient ; une liste d'allergènes vide veut dire « pas encore renseignée », pas « sans allergène ». | UC1, UC2, UC5 |
+| RM19 | Le coût de revient d'un menu pour un événement est la somme des coûts d'une portion de chacun de ses plats, multipliée par le nombre de couverts. | UC4, UC8 |
+| RM20 | Avant de calculer un coût, la quantité d'un ingrédient est ramenée dans son unité d'achat (1 kg = 1 000 g, 1 L = 100 cL). Un ingrédient acheté à la pièce s'utilise à la pièce. | UC4 |
 | RM21 | Un menu contient un allergène dès qu'un seul de ses plats le contient, à n'importe quel niveau. | UC5 |
 | RM22 | Une liste d'allergènes ne peut pas être remise à un client si un seul ingrédient du menu, à n'importe quel niveau, n'a pas ses allergènes renseignés : on ne devine jamais un allergène. | UC5 |
 | RM23 | Les allergènes signalés au client sont ceux de la liste des 14 allergènes réglementaires. | UC5 |
