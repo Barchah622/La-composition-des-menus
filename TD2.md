@@ -11,14 +11,29 @@
 
 *Une carte par classe, sans doublon. La responsabilité tient en une phrase, sans « et ». Chaque règle métier (RM) de votre livrable 1 est portée par une classe. Copiez le modèle de carte autant de fois que nécessaire.*
 
-### [Nom de la classe]
+### Menu
 
 | Responsabilité | Collaborateurs |
 |---|---|
-| | |
+| Connaître sa suite de plats, en refusant d'être enregistré sans aucun plat. | Plat |
 
-**Règles portées :** RM…
+**Règles portées :** RM1
 
+### PolitiqueTarifaire *(classe inventée : elle décide)*
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Décider du prix de vente théorique d'un menu à partir de son coût de revient total, selon le type de client, en refusant de tarifer si ce coût est incalculable. | Menu, CoutDeRevient, TypeDeClient |
+
+**Règles portées :** RM3, RM4
+
+### PrixDeVente
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Garantir la cohérence du prix retenu pour un menu selon le type de client ainsi que le nombre de convives : convives > 0, prix ≥ coût de revient. | Menu, TypeDeClient, PolitiqueTarifaire, CoutDeRevient |
+
+**Règles portées :** RM2, RM5
 ---
 
 ### Ingrédient
