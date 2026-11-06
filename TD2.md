@@ -91,6 +91,66 @@
 
 ---
 
+### Recette
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Décrire un plat (pour une portion) ou une préparation (pour une quantité produite) par la liste de ses composants. | Composant, CatalogueRecettes, GardienComposition |
+
+**Règles portées :** RM6, RM12
+
+---
+
+### Composant
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Indiquer quelle quantité d'un ingrédient ou d'une préparation entre dans une recette. | Recette, Ingrédient, ConvertisseurUnités |
+
+**Règles portées :** RM8, RM10
+
+---
+
+### CatalogueRecettes
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Refuser une nouvelle recette dont le nom est déjà pris. | Recette |
+
+**Règles portées :** RM9
+
+---
+
+### GardienComposition *(classe inventée, c'est elle qui décide)*
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Décider si un composant peut entrer dans une recette sans que la recette finisse par se contenir elle-même. | Recette, Composant |
+
+**Règles portées :** RM7
+
+---
+
+### TarifFournisseur
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Porter un nouveau prix transmis par le fournisseur pour un ingrédient, avec sa date d'application. | Ingrédient, PrixIngrédient, CatalogueIngrédients |
+
+**Règles portées :** —
+
+---
+
+### ImpactChangementPrix *(classe inventée, c'est elle qui décide)*
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Décider quelles préparations, quels plats et quels menus doivent être recalculés après un changement de prix. | Ingrédient, Composant, Recette, Menu, CalculateurCoûtRevient |
+
+**Règles portées :** RM16
+
+---
+
 ## 2. Le diagramme de classes
 
 *Chaque carte devient une classe : attributs, méthodes, relations, cardinalités. Ce qui n'est sur aucune carte n'existe pas dans le diagramme. Dans le doute, une association plutôt qu'un héritage.*
