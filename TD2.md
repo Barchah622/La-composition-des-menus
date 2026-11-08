@@ -298,9 +298,9 @@
 
 | # | Ce qui peut changer | L'indice | Où dans le modèle |
 |---|---|---|---|
-| C1 | | | |
-| C2 | | | |
-| C3 | | | |
+| C1 | La forme des remises aux gros clients (pourcentage ou prix négocié par client) | « Les remises aux gros clients ne sont pas décidées » (réponse de la cliente à Q7), et la question reste ouverte en partie 10 | PolitiqueTarifaire, TypeDeClient |
+| C2 | Le prix d'un devis déjà validé bouge ou non si un prix d'ingrédient change | La cliente dit que le coût change avec les prix, mais ne dit rien des devis déjà envoyés (H4 reste ouverte en partie 10) | PrixDeVente |
+| C3 | Le nombre de couverts peut changer après la validation du menu | Aucune réponse de la cliente à Q6 (H6 reste ouverte) | CoûtCalculé, PrixDeVente, Menu |
 
 ---
 
