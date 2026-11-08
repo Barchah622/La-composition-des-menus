@@ -286,8 +286,9 @@
 
 | # | Nous avons choisi… | plutôt que… | parce que… |
 |---|---|---|---|
-| D1 | | | |
-| D2 | | | |
+| D1 | une classe PolitiqueTarifaire qui calcule le prix de vente théorique | de calculer le prix dans Menu | le Menu ne connaît pas les clients, et la cliente n'a pas tranché la forme des remises : la règle de prix doit pouvoir changer sans toucher au Menu. |
+| D2 | une classe TypeDeClient qui porte son coefficient (× 3 entreprise, × 2,5 particulier) | d'écrire ces deux nombres dans PolitiqueTarifaire avec un « si entreprise, sinon particulier » | ajouter un type de client ou changer un coefficient devient une modification d'une ligne de données, sans retoucher la politique. |
+| D3 | de contrôler « prix final ≥ coût de revient » dans PrixDeVente | de le contrôler dans PolitiqueTarifaire | PolitiqueTarifaire ne produit qu'un prix théorique, que le Commercial peut ajuster à la main ; l'interdiction de vendre à perte doit s'appliquer au prix retenu. |
 
 ---
 
