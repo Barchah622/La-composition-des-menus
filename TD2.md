@@ -227,8 +227,8 @@
 
 **La classe qui décide :** *mettez-la en évidence sur le diagramme (une couleur), puis répondez en deux lignes.*
 
-- **Laquelle :**
-- **Quelle règle elle porte, et pourquoi elle n'existe pas dans le monde réel :**
+- **Laquelle :** PolitiqueTarifaire (en orange sur le diagramme).
+- **Quelle règle elle porte, et pourquoi elle n'existe pas dans le monde réel :** Elle porte RM4 : le prix de vente théorique d'un menu est son coût de revient total multiplié par le coefficient du type de client (× 3 pour une entreprise, × 2,5 pour un particulier). Aucun objet de la cuisine ne tient cette règle : le Menu ne connaît pas les clients, TypeDeClient connaît seulement son coefficient, et le Commercial est une personne, pas une classe du modèle. La cliente n'a pas tranché les remises, donc cette règle va changer.
 
 ---
 
