@@ -15,26 +15,39 @@
 
 | Responsabilité | Collaborateurs |
 |---|---|
-| Connaître sa suite de plats, en refusant d'être enregistré sans aucun plat. | Plat |
+| Connaître sa suite de plats, en refusant d'être enregistré sans aucun plat. | Recette |
 
 **Règles portées :** RM1
+
+---
 
 ### PolitiqueTarifaire *(classe inventée : elle décide)*
 
 | Responsabilité | Collaborateurs |
 |---|---|
-| Décider du prix de vente théorique d'un menu à partir de son coût de revient total, selon le type de client, en refusant de tarifer si ce coût est incalculable. | Menu, CoutDeRevient, TypeDeClient |
+| Décider du prix de vente théorique d'un menu en appliquant au coût de revient total le coefficient du type de client. | CoûtCalculé, TypeDeClient |
 
-**Règles portées :** RM3, RM4
+**Règles portées :** RM4
+
+---
+
+### TypeDeClient
+
+| Responsabilité | Collaborateurs |
+|---|---|
+| Connaître le coefficient de marge d'un type de client (× 3 pour une entreprise, × 2,5 pour un particulier). | PolitiqueTarifaire |
+
+**Règles portées :** —
+
+---
 
 ### PrixDeVente
 
 | Responsabilité | Collaborateurs |
 |---|---|
-| Garantir la cohérence du prix retenu pour un menu selon le type de client ainsi que le nombre de convives : convives > 0, prix ≥ coût de revient. | Menu, TypeDeClient, PolitiqueTarifaire, CoutDeRevient |
+| Garder le prix de vente final retenu pour un menu et un type de client, en refusant tout prix inférieur au coût de revient. | Menu, TypeDeClient, PolitiqueTarifaire, CoûtCalculé |
 
-**Règles portées :** RM2, RM5
----
+**Règles portées :** RM5
 
 ### Ingrédient
 
