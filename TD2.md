@@ -259,7 +259,7 @@
 
 *Le diagramme de séquence de votre livrable 1, refait avec les classes de votre modèle. Une classe qui envoie huit messages d'affilée porte trop de logique.*
 
-**Use case :**
+**Use case :**UC4 — Calculer le coût de revient d'un menu
 
 ![Diagramme de séquence](diagrammes/sequence-classes.png)
 
