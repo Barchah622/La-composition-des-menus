@@ -77,6 +77,8 @@ Les trois cas du sujet C de l'énoncé sont aussi testés (`VerificateurAllergen
 
 ## 5. Les use cases, du menu à la règle métier
 
+![Diagramme de use cases final, coloré par porteur](diagrammes/use-cases-td3.png)
+
 | UC | Porteur | Choix du menu | Classe du use case (`domaine/`) | Règles | Tests |
 |---|---|---|---|---|---|
 | UC1 Enregistrer un ingrédient | Manele HSSINI | 1 | `EnregistrerIngredient` | RM13, RM14, RM17, RM18 | `EnregistrerIngredientTest` |
