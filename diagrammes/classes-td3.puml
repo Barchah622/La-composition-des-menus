@@ -1,0 +1,165 @@
+@startuml classes-td3
+!pragma layout smetana
+skinparam dpi 130
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+skinparam classFontSize 13
+skinparam class {
+  BackgroundColor #E8F0FB
+  BorderColor #2F5B8C
+  ArrowColor #444444
+}
+skinparam legendBackgroundColor #FFFFFF
+hide empty members
+hide circle
+
+title Sujet C · Diagramme de classes corrigé (TD3 · revision)
+
+class PolitiqueTarifaire #F4A460 {
+  - CENTIMES_PAR_EURO = 100
+  + prixTheorique(cout, typeDeClient) : double
+}
+interface PolitiqueDePrix #C8EBD3 {
+  + prixTheorique(cout, typeDeClient) : double
+}
+enum TypeDeClient {
+  ENTREPRISE (× 3)
+  PARTICULIER (× 2,5)
+  + coefficient() : double
+}
+class PrixDeVente {
+  menu, couverts, prix
+  coutRevient, dateFixation
+  + marge() : double
+}
+
+class Menu {
+  nom
+  etat : EtatMenu
+  + ajouterPlat(recette)
+  + retirerPlat(nom)
+  + enregistrer()
+}
+enum EtatMenu {
+  EN_COMPOSITION
+  COMPOSE
+  CHIFFRE
+  TARIFE
+  DEVIS_VALIDE
+  A_RECALCULER
+}
+class Recette {
+  nom
+  type : PLAT | PREPARATION
+  quantiteProduite, uniteProduite
+  + ajouterComposant(composant)
+  + valider()
+  + contient(recette) : booléen
+  + allergenes() : Set<Allergene>
+}
+class Composant {
+  quantite
+  unite : UniteMesure
+  + quantiteEnUniteAchat() : double
+  + partDeLaPreparation() : double
+}
+class Ingredient {
+  nom
+  uniteAchat : UniteAchat
+  frais : booléen
+  + appliquerPrix(prix)
+  + prixEnVigueur(date) : PrixIngredient
+  + renseignerAllergenes(set)
+}
+class PrixIngredient {
+  valeur
+  dateApplication
+}
+enum Allergene {
+  les 14 réglementaires
+}
+
+class GardienComposition #FFF0B3 {
+  + peutEntrer(composant, recette) : booléen
+}
+class CalculateurCoutRevient #FFF0B3 {
+  TAUX_PERTES_FRAIS = 10 %
+  + coutRecette(recette, date) : Cout
+  + calculer(menu, couverts, date) : CoutCalcule
+}
+class CoutCalcule {
+  couverts, coutParCouvert
+  coutTotal, ingredientsSansPrix
+  + complet() : booléen
+}
+class VerificateurAllergenes #FFF0B3 {
+  + etablirListe(menu, date) : ListeAllergenesMenu
+}
+class ListeAllergenesMenu {
+  date, aRevoir
+  + allergenesDuMenu()
+}
+class ImpactChangementPrix #FFF0B3 {
+  + aRecalculer(ingredient, recettes, menus) : ImpactPrix
+}
+class ControleurVariationPrix #FFF0B3 {
+  SEUIL_VARIATION = 50 %
+  + exigeConfirmation(ancien, nouveau) : booléen
+}
+class TarifFournisseur {
+  referenceIngredient, prix
+  unite, dateApplication
+}
+class ModificationPrix {
+  nomIngredient, nouveauPrix
+  dateApplication, referenceJustificatif
+}
+class ConvertisseurUnites {
+  + versUniteAchat(quantite, unite, uniteAchat) : double
+}
+class CatalogueIngredients {
+  + ajouter(ingredient)
+  + trouver(nom)
+}
+class CatalogueRecettes {
+  + ajouter(recette)
+  + trouver(nom)
+}
+
+PolitiqueDePrix <|.. PolitiqueTarifaire
+PolitiqueTarifaire ..> CoutCalcule
+PolitiqueTarifaire ..> TypeDeClient
+PrixDeVente --> "1" TypeDeClient
+Menu "1" -- "0..*" PrixDeVente
+Menu --> "1" EtatMenu
+Menu "0..*" o-- "1..*" Recette : plats
+Recette "1" *-- "0..*" Composant
+Composant --> "0..1" Ingredient
+Composant --> "0..1" Recette : préparation
+Composant ..> ConvertisseurUnites
+Recette ..> GardienComposition
+Ingredient "1" *-- "0..*" PrixIngredient : historique
+Ingredient --> "0..14" Allergene
+CatalogueIngredients o-- "0..*" Ingredient
+CatalogueRecettes o-- "0..*" Recette
+CalculateurCoutRevient ..> Menu
+CalculateurCoutRevient ..> CoutCalcule : crée
+VerificateurAllergenes ..> Menu
+VerificateurAllergenes ..> ListeAllergenesMenu : crée
+ListeAllergenesMenu --> Allergene
+TarifFournisseur ..> ControleurVariationPrix
+ModificationPrix ..> ControleurVariationPrix
+TarifFournisseur ..> ImpactChangementPrix
+ModificationPrix ..> ImpactChangementPrix
+ImpactChangementPrix ..> Menu
+TarifFournisseur --> Ingredient
+ModificationPrix --> Ingredient
+
+legend right
+  |<back:#F4A460>   </back>| La classe qui décide : PolitiqueTarifaire |
+  |<back:#C8EBD3>   </back>| Interface = point de variation C1 (OCP, DIP) |
+  |<back:#FFF0B3>   </back>| Autres classes inventées qui décident |
+  |<back:#E8F0FB>   </back>| Classes du monde réel |
+endlegend
+@enduml
