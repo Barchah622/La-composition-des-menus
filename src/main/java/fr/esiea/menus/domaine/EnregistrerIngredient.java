@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 /**
- * UC1 — Enregistrer un ingrédient.
+ * UC1 — Enregistrer un ingrédient..
  * Porteuse : Manele HSSINI. Règles : RM13, RM14, RM15, RM17, RM18.
  */
 public class EnregistrerIngredient {
