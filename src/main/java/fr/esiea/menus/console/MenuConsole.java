@@ -113,6 +113,7 @@ public class MenuConsole {
 
     // ---------- UC1 · Manele ----------
 
+    // ---------- UC1 · Manele ----------
     private void enregistrerIngredient() {
         String nom = saisie.texteObligatoire("Nom de l'ingrédient");
         UniteAchat unite = saisie.choisir("Unité d'achat", List.of(UniteAchat.values()), UniteAchat::libelle);
