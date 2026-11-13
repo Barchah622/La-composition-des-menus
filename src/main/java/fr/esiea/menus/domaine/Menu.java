@@ -16,6 +16,7 @@ public class Menu {
             throw new IllegalArgumentException("un menu doit avoir un nom");
         }
         this.nom = nom.trim();
+
     }
 
     /** Pour la persistance : recrée un menu tel qu'il a été enregistré. */
@@ -23,6 +24,7 @@ public class Menu {
         Menu menu = new Menu(nom);
         menu.plats.addAll(plats);
         menu.etat = etat;
+
         return menu;
     }
 
@@ -30,12 +32,14 @@ public class Menu {
         if (plat.estPreparation()) {
             throw new RegleMetierException("RM1", "« " + plat.nom() + " » est une préparation : un menu ne contient que des plats");
         }
+
         plats.add(plat);
     }
 
     public void retirerPlat(String nomPlat) {
         boolean retire = plats.removeIf(plat -> plat.nom().equalsIgnoreCase(nomPlat.trim()));
         if (!retire) {
+
             throw new ElementInconnuException("plat", nomPlat);
         }
     }
@@ -43,6 +47,7 @@ public class Menu {
     public void enregistrer() {
         exigerAuMoinsUnPlat();
         etat = EtatMenu.COMPOSE;
+
     }
 
     public void exigerAuMoinsUnPlat() {
@@ -53,22 +58,27 @@ public class Menu {
 
     public void marquerChiffre() {
         etat = EtatMenu.CHIFFRE;
+
     }
 
     public void marquerTarife() {
         etat = EtatMenu.TARIFE;
+
     }
 
     public void marquerARecalculer() {
         etat = EtatMenu.A_RECALCULER;
+
     }
 
     public boolean utilise(Ingredient ingredient) {
         return plats.stream().anyMatch(plat -> plat.utilise(ingredient));
+
     }
 
     public String nom() {
         return nom;
+        
     }
 
     public List<Recette> plats() {
