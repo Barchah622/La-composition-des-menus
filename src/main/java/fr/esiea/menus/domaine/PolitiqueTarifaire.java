@@ -10,8 +10,7 @@ public class PolitiqueTarifaire implements PolitiqueDePrix {
     @Override
     public double prixTheorique(CoutCalcule cout, TypeDeClient typeDeClient) {
         if (!cout.complet()) {
-            throw new RegleMetierException("RM3", "prix manquant pour " + new TreeSet<>(cout.ingredientsSansPrix())
-                    + " : le prix de vente ne peut pas être fixé");
+            throw new RegleMetierException("RM3", "prix manquant pour " + new TreeSet<>(cout.ingredientsSansPrix())+ " : le prix de vente ne peut pas être fixé");
         }
         return arrondiAuCentime(cout.coutTotal() * typeDeClient.coefficient());
     }

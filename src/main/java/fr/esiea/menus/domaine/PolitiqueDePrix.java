@@ -6,6 +6,5 @@ package fr.esiea.menus.domaine;
  * DIP : le use case dépend de cette interface, pas d'une politique concrète.
  */
 public interface PolitiqueDePrix {
-
     double prixTheorique(CoutCalcule cout, TypeDeClient typeDeClient);
 }

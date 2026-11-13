@@ -1,13 +1,12 @@
 package fr.esiea.menus.domaine;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 /** LA CLASSE QUI DÉCIDE : un cas normal, un cas limite, un cas d'erreur. Aucune base de données nécessaire. */
 class PolitiqueTarifaireTest {
@@ -15,8 +14,7 @@ class PolitiqueTarifaireTest {
     private final PolitiqueDePrix politique = new PolitiqueTarifaire();
 
     private static CoutCalcule cout(double total, String... ingredientsSansPrix) {
-        return new CoutCalcule("Mariage", LocalDate.of(2026, 11, 13), 100, Map.of(), total / 100, total,
-                Set.of(ingredientsSansPrix));
+        return new CoutCalcule("Mariage", LocalDate.of(2026, 11, 13), 100, Map.of(), total / 100, total,Set.of(ingredientsSansPrix));
     }
 
     @Test
