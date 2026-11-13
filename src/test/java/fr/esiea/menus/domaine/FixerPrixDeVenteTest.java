@@ -1,9 +1,8 @@
 package fr.esiea.menus.domaine;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 /** UC8 — Fixer le prix de vente d'un menu selon le type de client · Mohamed Amine BARCHAH. */
 class FixerPrixDeVenteTest {
@@ -26,8 +25,7 @@ class FixerPrixDeVenteTest {
 
     @Test
     void vendreAPerteEstInterdit() {
-        PropositionPrix proposition = cuisine.fixerPrixDeVente.proposer("Mariage", 100, TypeDeClient.PARTICULIER,
-                Cuisine.DOUZE_NOVEMBRE);
+        PropositionPrix proposition = cuisine.fixerPrixDeVente.proposer("Mariage", 100, TypeDeClient.PARTICULIER,Cuisine.DOUZE_NOVEMBRE);
 
         RegleMetierException refus = assertThrows(RegleMetierException.class,
                 () -> cuisine.fixerPrixDeVente.fixer(proposition, 10.0, Cuisine.DOUZE_NOVEMBRE));

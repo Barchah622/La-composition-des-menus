@@ -13,8 +13,7 @@ public class FixerPrixDeVente {
     private final PolitiqueDePrix politique;
     private final PrixDeVenteRepository prixDeVente;
 
-    public FixerPrixDeVente(MenuRepository menus, CalculateurCoutRevient calculateur, PolitiqueDePrix politique,
-                            PrixDeVenteRepository prixDeVente) {
+    public FixerPrixDeVente(MenuRepository menus, CalculateurCoutRevient calculateur, PolitiqueDePrix politique,PrixDeVenteRepository prixDeVente) {
         this.menus = menus;
         this.calculateur = calculateur;
         this.politique = politique;
@@ -28,8 +27,7 @@ public class FixerPrixDeVente {
 
     public PrixDeVente fixer(PropositionPrix proposition, double prixFinal, LocalDate date) {
         CoutCalcule cout = proposition.cout();
-        PrixDeVente prix = new PrixDeVente(cout.menu(), proposition.typeDeClient(), cout.couverts(), prixFinal,
-                cout.coutTotal(), date);
+        PrixDeVente prix = new PrixDeVente(cout.menu(), proposition.typeDeClient(), cout.couverts(), prixFinal,cout.coutTotal(), date);
         prixDeVente.enregistrer(prix);
         Menu menu = trouverMenu(cout.menu());
         menu.marquerTarife();
